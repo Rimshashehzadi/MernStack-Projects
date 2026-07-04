@@ -11,16 +11,22 @@ app.use(e.json());
 //     const result = await collection.insertOne(req.body);
 //     resp.send('Working...')
 // })
-app.post("/add-task", async (req, resp) => {
-    console.log(req.body);
 
+   
+//     app.get("/add-task", (req, res) => {
+//     res.send("This is the add-task route. Use POST to insert data.");
+// });
+
+// app.get("/", (req, resp) => {
+//     resp.send({
+//         message: "Hello World",
+//         success: true,
+//     })
+// })
+app.post("/add-task", async (req, resp) => {
     const db = await connection();
     const collection = db.collection(collectionName);
-
     const result = await collection.insertOne(req.body);
-
-    console.log(result);
-
     resp.send("Working...");
 });
 
@@ -28,6 +34,6 @@ app.get("/", (req, resp) => {
     resp.send({
         message: "Hello World",
         success: true,
-    })
-})
+    });
+});
 app.listen(3200)

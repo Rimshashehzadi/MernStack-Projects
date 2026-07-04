@@ -1,6 +1,6 @@
 import { MongoClient } from 'mongodb';
 
-const url ="mongodb+srv://rimsha:sJnmdtaQ2BV.%25N.@cluster0.17ltzne.mongodb.net/node-project?retryWrites=true&w=majority";
+const url = 'mongodb+srv://rimsha:rimsha12345@cluster0.17ltzne.mongodb.net/?appName=Cluster0'
 const dbName = 'node-project';
 export const collectionName = 'todo';
 const client = new MongoClient(url)
