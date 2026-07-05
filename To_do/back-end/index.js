@@ -21,4 +21,15 @@ app.post("/add-task", async (req, resp) => {
     }
 });
 
+app.get("/tasks", async (req, resp) => {
+    const db = await connection();
+    const collection = db.collection(collectionName);
+    const tasks = await collection.find().toArray();
+    if (tasks){
+        resp.send({ message: "Tasks fetched successfully.", success: true, tasks });
+    }else{
+        resp.send({ message: "Failed to fetch tasks.", success: false });
+    }
+});
+
 app.listen(3200)
