@@ -1,18 +1,21 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const AddTask = () => {
     const[taskData,setTaskData] = useState()
-    const handleSubmit = () => {
+     const nevigate = useNavigate();
+     const handleSubmit = async () => {
         console.log(taskData)
-        let result = fetch('http://localhost:3200/add-task',{
+        let result = await  fetch('http://localhost:3200/add-task',{
             method:'POST',
             body:JSON.stringify(taskData),
             headers:{
                 'Content-Type':'application/json'
             }
         })
-        result = result.json()
+        result = await result.json()
         if(result){
+          nevigate("/")
             alert('Task Added Successfully')
         }
 
