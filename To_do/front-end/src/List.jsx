@@ -1,5 +1,6 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 
 const List = () => {
   const [taskData, setTaskData] = useState()
@@ -55,10 +56,13 @@ const List = () => {
             <li className='col-span-1 bg-indigo-600 text-white h-9 w-9 rounded-full flex items-center justify-center font-bold'>{index + 1}</li>
             <li className='col-span-4 text-lg font-medium'>{item.title}</li>
             <li className='col-span-7 text-gray-700 font-normal text-lg'>{item.description}</li>
-            <li className='col-span-2'>
-              <button onClick={()=>deleteTask(item._id)} className="bg-red-600 text-white px-6 py-2 rounded-md hover:bg-red-600 transition-colors duration-300">
+            <li className='col-span-2 flex space-x-2.5'>
+              <button onClick={()=>deleteTask(item._id)} className="bg-red-600  text-white px-4 py-2 rounded-md hover:bg-red-600 transition-colors duration-300">
                 Delete
               </button>
+              <Link to={'update/'+item._id} className="bg-green-600  text-white px-4 py-2 rounded-md  hover:bg-green-700 transition-colors duration-300">
+                Update
+              </Link>
             </li>
           </ul>
 

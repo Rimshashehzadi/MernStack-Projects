@@ -32,6 +32,18 @@ app.get("/tasks", async (req, resp) => {
         resp.send({ message: "Failed to fetch tasks.", success: false });
     }
 });
+
+app.get("/task/:id", async (req, resp) => {
+    const db = await connection();
+    const collection = db.collection(collectionName);
+    const id = req.params.id;
+    const result = await collection.findOne({_id:new ObjectId(id)})
+    if (result){
+        resp.send({ message: "Tasks fetched successfully.", success: true, result});
+    }else{
+        resp.send({ message: "Failed  try after sometime.", success: false });
+    }
+});
 app.delete("/delete-task/:id", async (req, resp) => {
     const db = await connection();
     const id = req.params.id;
