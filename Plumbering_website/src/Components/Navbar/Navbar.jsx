@@ -5,8 +5,8 @@ import { IoChevronDown } from "react-icons/io5";
 import { Grip } from 'lucide-react';
 import { Search } from 'lucide-react';
 import { ShoppingBag } from 'lucide-react';
-// import MobileNavbar from './MobileNavbar';
-// import SideBar from './SideBar';
+import MobileNavbar from './MobileNavbar';
+import SideBar from './SideBar';
 
 const Navbar = () => {
   const Menu = [
@@ -59,7 +59,7 @@ const Navbar = () => {
       ) : (
         <Link
           to={item.path}
-          className="relative text-xl font-semibold text-gray-700 hover:text-primary after:absolute after:left-0 after:-bottom-1 after:h-[3px] after:w-0 after:bg-primary after:transition-all after:duration-300 hover:after:w-full"
+          className="relative text-xl font-semibold text-gray-700 hover:text-primary after:absolute after:left-0 after:-bottom-1 after:h-0.75 after:w-0 after:bg-primary after:transition-all after:duration-300 hover:after:w-full"
         >
           {item.name}
         </Link>
@@ -100,10 +100,10 @@ const Navbar = () => {
             <button onClick={() => setIsOpen(true)}>
               <Grip size={30} className="cursor-pointer hidden lg:flex text-gray-600" />
             </button>
-            {/* <SideBar isOpen={isOpen} setIsOpen={setIsOpen} /> */}
+            <SideBar isOpen={isOpen} setIsOpen={setIsOpen} />
           </div>
 
-          {/* <MobileNavbar /> */}
+          <MobileNavbar />
         </div>
 
       </div>
