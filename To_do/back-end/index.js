@@ -55,6 +55,14 @@ app.delete("/delete-task/:id", async (req, resp) => {
         resp.send({ message: "Failed to delete task.", success: false });
     }
 });
+
+app.put('/update-task', async(req,resp) => {
+    const db = await connection();
+    const collection = await db.collection(collectionName);
+    console.log(req.body);
+    resp.send('test');
+
+})
     
 
 app.listen(3200)
