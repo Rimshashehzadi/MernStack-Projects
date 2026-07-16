@@ -45,6 +45,7 @@ const List = () => {
 
       {/* <h1 className='text-4xl font-bold text-center mt-10'>List of Tasks</h1> */}
       <ul className="hidden md:grid grid-cols-14 bg-linear-to-r from-indigo-600 to-blue-500 text-white px-8 py-5 font-semibold text-lg">
+       {/* <li className='col-span-1'><input type='checkbox'/></li> */}
         <li className='col-span-1'>S.No</li>
         <li className='col-span-4'>Title</li>
         <li className='col-span-7'>Description</li>
@@ -52,8 +53,9 @@ const List = () => {
       </ul>
       {taskData && taskData.length > 0 ? (
         taskData.map((item, index) => (
-          <ul key={item._id} className="grid grid-cols-14 items-center px-8 py-6 border-b border-b-gray-700 hover:bg-indigo-50 hover:scale-[1.01] transition-all duration-300">
+          <ul key={item._id} className="grid grid-cols-15 items-center px-8 py-6 border-b border-b-gray-700 hover:bg-indigo-50 hover:scale-[1.01] transition-all duration-300">
             <li className='col-span-1 bg-indigo-600 text-white h-9 w-9 rounded-full flex items-center justify-center font-bold'>{index + 1}</li>
+            
             <li className='col-span-4 text-lg font-medium'>{item.title}</li>
             <li className='col-span-7 text-gray-700 font-normal text-lg'>{item.description}</li>
             <li className='col-span-2 flex space-x-2.5'>

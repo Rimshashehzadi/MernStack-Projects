@@ -1,80 +1,106 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+
 const UpdateTask = () => {
-    const [taskData, setTaskData] = useState()
-    //  const nevigate = useNavigate();
+    const navigate = useNavigate();
     const { id } = useParams();
-    console.log(id)
+
+    const [taskData, setTaskData] = useState({
+        _id: "",
+        title: "",
+        description: "",
+    });
+
     useEffect(() => {
-        getTask(id)
+        getTask();
+    }, []);
 
-    }, [])
+    const getTask = async () => {
+        try {
+            let response = await fetch(`http://localhost:3200/task/${id}`);
+            let result = await response.json();
 
-    const getTask = async (id) => {
-        let task = await fetch("http://localhost:3200/task/" + id);
-        task = await task.json()
-        if (task.result) {
-            setTaskData(task.result)
+            if (result.success) {
+                setTaskData(result.result);
+            }
+        } catch (error) {
+            console.log(error);
         }
+    };
 
-    }
+    const updateTask = async () => {
+        try {
+            let response = await fetch("http://localhost:3200/update-task", {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(taskData),
+            });
+
+            let result = await response.json();
+
+            if (result.success) {
+                alert("Task Updated Successfully");
+                navigate("/");
+            } else {
+                alert(result.message);
+            }
+        } catch (error) {
+            console.log(error);
+            alert("Something went wrong");
+        }
+    };
+
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4 py-8">
-            <div className="w-full max-w-lg bg-white rounded-2xl shadow-2xl p-6 sm:p-8">
-                <h1 className="text-2xl sm:text-3xl font-bold text-center text-gray-800 mb-6">
+        <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
+            <div className="bg-white shadow-lg rounded-lg p-8 w-full max-w-lg">
+                <h1 className="text-3xl font-bold text-center mb-6">
                     Update Task
                 </h1>
 
-
-                {/* Task */}
-                <div className="flex flex-col gap-5">
-                    <label
-                        htmlFor="task"
-                        className="block mb-2 text-sm sm:text-base font-medium text-gray-700"
-                    >
-                        Task
+                <div className="mb-4">
+                    <label className="block mb-2 font-medium">
+                        Task Title
                     </label>
 
                     <input
                         type="text"
-                        value={taskData?.title}
-                        onChange={(event) => setTaskData({ ...taskData, title: event.target.value })}
-                        id="task"
-                        name="task"
-                        placeholder="Enter task title"
-                        className="w-full rounded-lg border border-gray-300 p-3 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        value={taskData.title}
+                        onChange={(e) =>
+                            setTaskData({
+                                ...taskData,
+                                title: e.target.value,
+                            })
+                        }
+                        className="w-full border rounded-lg p-3 outline-none focus:ring-2 focus:ring-blue-500"
                     />
                 </div>
 
-                {/* Description */}
-                <div>
-                    <label
-                        htmlFor="description"
-                        className="block mb-2 text-sm sm:text-base font-medium text-gray-700"
-                    >
+                <div className="mb-6">
+                    <label className="block mb-2 font-medium">
                         Description
                     </label>
 
                     <textarea
-                        rows={5}
-                        value={taskData?.description}
-                        onChange={(event) => setTaskData({ ...taskData, description: event.target.value })}
-                        id="description"
-                        name="description"
-                        placeholder="Enter task description..."
-                        className="w-full rounded-lg border border-gray-300 p-3 text-sm sm:text-base resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        rows="5"
+                        value={taskData.description}
+                        onChange={(e) =>
+                            setTaskData({
+                                ...taskData,
+                                description: e.target.value,
+                            })
+                        }
+                        className="w-full border rounded-lg p-3 outline-none focus:ring-2 focus:ring-blue-500"
                     ></textarea>
                 </div>
 
-                {/* Button */}
                 <button
-                    type="submit"
-
-                    className="w-full rounded-lg bg-blue-600 py-3 text-white text-sm sm:text-base font-semibold transition duration-300 hover:bg-blue-700 active:scale-95"
+                    onClick={updateTask}
+                    className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-semibold"
                 >
                     Update Task
                 </button>
-
             </div>
         </div>
     );

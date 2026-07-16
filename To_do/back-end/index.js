@@ -56,13 +56,33 @@ app.delete("/delete-task/:id", async (req, resp) => {
     }
 });
 
-app.put('/update-task', async(req,resp) => {
+app.put('/update-task', async (req, resp) => {
     const db = await connection();
-    const collection = await db.collection(collectionName);
-    console.log(req.body);
-    resp.send('test');
+    const collection = db.collection(collectionName);
 
-})
+    const { _id, ...fields } = req.body;
+    const update = { $set: fields };
+
+    // console.log(fields);
+
+    const results = await collection.updateOne(
+        { _id: new ObjectId(_id) },
+        update
+    );
+
+    if (results.modifiedCount > 0) {
+        return resp.send({
+            message: "Task updated successfully",
+            success: true,
+            results,
+        });
+    } else {
+        return resp.send({
+            message: "No task updated",
+            success: false,
+        });
+    }
+});
     
 
-app.listen(3200)
+app.listen(3200) 
