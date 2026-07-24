@@ -2,23 +2,25 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 const SignUp = () => {
-  const [userData, setUserData] = useState({
-    name: "",
-    email: "",
-    password: "",
-  });
+  const [userData, setUserData] = useState();
 
-  const handleChange = (e) => {
-    setUserData({
-      ...userData,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSignUp = async () =>{
     console.log(userData);
-  };
+    let result = await fetch('http://localhost:3200/signup' ,{
+       method: 'Post',
+      body:JSON.stringify(userData),
+      headers:{
+        'Content-Type': 'Application/json'
+      }
+    })
+      
+     
+    
+  }
+
+ 
+
+ 
 
   return (
     // <div className="min-h-screen bg-linear-to-br from-blue-100 via-white to-indigo-100 flex items-center justify-center px-4">
@@ -33,17 +35,18 @@ const SignUp = () => {
           Sign up to continue
         </p>
 
-        <form onSubmit={handleSubmit} className="space-y-5">
+        <form  className="space-y-5">
           {/* Name */}
           <div>
-            <label className="text-gray-700 font-medium">Name</label>
+            <label htmlFor="" className="text-gray-700 font-medium">Name</label>
 
             <input
               type="text"
               name="name"
+               onChange={(event) => setUserData({...useState,name:event.target.value})}
               placeholder="Enter your name"
-              value={userData.name}
-              onChange={handleChange}
+              // value={userData.name}
+              // onChange={handleChange}
               className="w-full mt-2 p-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
@@ -51,14 +54,15 @@ const SignUp = () => {
           {/* Email */}
 
           <div>
-            <label className="text-gray-700 font-medium">Email</label>
+            <label htmlFor="" className="text-gray-700 font-medium">Email</label>
 
             <input
               type="email"
               name="email"
+               onChange={(event) => setUserData({...useState,email:event.target.value})}
               placeholder="Enter your email"
-              value={userData.email}
-              onChange={handleChange}
+              // value={userData.email}
+              // onChange={handleChange}
               className="w-full mt-2 p-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
@@ -66,20 +70,21 @@ const SignUp = () => {
           {/* Password */}
 
           <div>
-            <label className="text-gray-700 font-medium">Password</label>
+            <label htmlFor="" className="text-gray-700 font-medium">Password</label>
 
             <input
               type="password"
               name="password"
               placeholder="Enter your password"
-              value={userData.password}
-              onChange={handleChange}
+              onChange={(event) => setUserData({...useState,password:event.target.value})}
+              // value={userData.password}
+              // onChange={handleChange}
               className="w-full mt-2 p-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
 
           <button
-            type="submit"
+          onClick={handleSignUp}
             className="w-full bg-blue-600 text-white py-3 rounded-xl font-semibold hover:bg-blue-700 duration-300"
           >
             Create Account
