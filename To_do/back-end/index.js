@@ -2,7 +2,7 @@ import e  from "express";
 import {connection ,collectionName} from "./dbconfig.js";
 import cors from 'cors';
 import { ObjectId } from "mongodb";
-
+import jwt from 'jsonwebtoken'
 
 const app = e();
 
@@ -13,7 +13,7 @@ app.post('/signup',async(req,resp)=> {
     const userData = req.body;
     if(userData.email && userData.password){
         const db = await connection();
-        const collection = await db.collection('');
+        const collection = await db.collection('users1111');
         const result = await collection.insertOne(userData);
         if(result){
             jwt
