@@ -9,6 +9,18 @@ const app = e();
 app.use(e.json());
 app.use(cors());
 
+app.post('/signup',async(req,resp)=> {
+    const userData = req.body;
+    if(userData.email && userData.password){
+        const db = await connection();
+        const collection = await db.collection('');
+        const result = await collection.insertOne(userData);
+        if(result){
+            jwt
+        }
+    }
+})
+
 
 
 app.post("/add-task", async (req, resp) => {

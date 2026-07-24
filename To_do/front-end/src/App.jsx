@@ -5,6 +5,8 @@ import AddTask from './components/AddTask'
 
 import List from './List'
 import UpdateTask from './components/UpdatTask'
+import SignUp from './components/SignUp'
+import Login from './components/Login'
 
 const App = () => {
   return (
@@ -14,6 +16,8 @@ const App = () => {
         <Route path='/' element={<List/>} />
         <Route path='/add' element= {<AddTask/>} />
         <Route path='/update/:id' element= {<UpdateTask/>} />
+        <Route path='/signup' element={<SignUp/>}/>
+        <Route path='/login' element={<Login/>}/>
       </Routes>
     </div>
   )
