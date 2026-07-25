@@ -2,21 +2,29 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 const SignUp = () => {
-  const [userData, setUserData] = useState();
+const [userData, setUserData] = useState({
+  name: "",
+  email: "",
+  password: "",
+});
 
-  const handleSignUp = async () =>{
-    console.log(userData);
-    let result = await fetch('http://localhost:3200/signup' ,{
-       method: 'Post',
-      body:JSON.stringify(userData),
-      headers:{
-        'Content-Type': 'Application/json'
-      }
-    })
-      
-     
-    
-  }
+const handleSignUp = async (e) => {
+  e.preventDefault();
+
+  console.log("Sending:", userData);
+
+  const response = await fetch("http://localhost:3200/signup", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(userData),
+  });
+
+  const result = await response.json();
+
+  alert('SignUp Successfully',result)
+};
 
  
 
@@ -85,6 +93,7 @@ const SignUp = () => {
 
           <button
           onClick={handleSignUp}
+          
             className="w-full bg-blue-600 text-white py-3 rounded-xl font-semibold hover:bg-blue-700 duration-300"
           >
             Create Account
