@@ -43,7 +43,7 @@ const SignUp = () => {
             <input
               type="text"
               name="name"
-               onChange={(event) => setUserData({...useState,name:event.target.value})}
+               onChange={(event) => setUserData({...userData,name:event.target.value})}
               placeholder="Enter your name"
               // value={userData.name}
               // onChange={handleChange}
@@ -59,7 +59,7 @@ const SignUp = () => {
             <input
               type="email"
               name="email"
-               onChange={(event) => setUserData({...useState,email:event.target.value})}
+               onChange={(event) => setUserData({...userData,email:event.target.value})}
               placeholder="Enter your email"
               // value={userData.email}
               // onChange={handleChange}
@@ -76,7 +76,7 @@ const SignUp = () => {
               type="password"
               name="password"
               placeholder="Enter your password"
-              onChange={(event) => setUserData({...useState,password:event.target.value})}
+              onChange={(event) => setUserData({...userData,password:event.target.value})}
               // value={userData.password}
               // onChange={handleChange}
               className="w-full mt-2 p-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
