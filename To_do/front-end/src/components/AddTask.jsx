@@ -1,81 +1,142 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 
 const AddTask = () => {
-    const[taskData,setTaskData] = useState()
-     const nevigate = useNavigate();
-     const handleSubmit = async () => {
-        console.log(taskData)
-        let result = await  fetch('http://localhost:3200/add-task',{
-            method:'POST',
-            body:JSON.stringify(taskData),
-            headers:{
-                'Content-Type':'application/json'
-            }
-        })
-        result = await result.json()
-        if(result){
-          nevigate("/")
-            alert('Task Added Successfully')
-        }
+  const [taskData, setTaskData] = useState({
+    title: "",
+    description: "",
+  });
 
+  const navigate = useNavigate();
+
+  const handleSubmit = async () => {
+    if (!taskData.title || !taskData.description) {
+      alert("Please fill all fields");
+      return;
     }
-  return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4 py-8">
-      <div className="w-full max-w-lg bg-white rounded-2xl shadow-2xl p-6 sm:p-8">
-        <h1 className="text-2xl sm:text-3xl font-bold text-center text-gray-800 mb-6">
-          Add New Task
-        </h1>
 
-        
-          {/* Task */}
-          <div className="flex flex-col gap-5">
-            <label
-              htmlFor="task"
-              className="block mb-2 text-sm sm:text-base font-medium text-gray-700"
-            >
-              Task
+    try {
+      let result = await fetch("http://localhost:3200/add-task", {
+        method: "POST",
+        body: JSON.stringify(taskData),
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      result = await result.json();
+
+      if (result.success) {
+        alert("Task Added Successfully");
+        navigate("/");
+      } else {
+        alert("Failed to add task");
+      }
+    } catch (error) {
+      console.log(error);
+      alert("Server Error");
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-linear-to-br from-indigo-100 via-white to-blue-100 flex items-center justify-center px-4 py-10">
+
+      <motion.div
+        initial={{ opacity: 0, y: 80, scale: 0.9 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        transition={{ duration: 0.7 }}
+        className="w-full max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl bg-white rounded-3xl shadow-2xl p-6 sm:p-8 md:p-10"
+      >
+        {/* Heading */}
+
+        <motion.h1
+          initial={{ opacity: 0, y: -30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+          className="text-3xl sm:text-4xl font-bold text-center text-gray-800"
+        >
+          Add New Task
+        </motion.h1>
+
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.35 }}
+          className="text-center text-gray-500 mt-3 mb-8 text-sm sm:text-base"
+        >
+          Create and organize your daily tasks.
+        </motion.p>
+
+        <div className="space-y-6">
+
+          {/* Task Title */}
+
+          <motion.div
+            initial={{ x: -60, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ delay: 0.45 }}
+          >
+            <label className="block mb-2 text-gray-700 font-semibold">
+              Task Title
             </label>
 
             <input
               type="text"
-              onChange={(event) =>setTaskData({...taskData,title:event.target.value})}
-              id="task"
-              name="task"
               placeholder="Enter task title"
-              className="w-full rounded-lg border border-gray-300 p-3 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              value={taskData.title}
+              onChange={(e) =>
+                setTaskData({
+                  ...taskData,
+                  title: e.target.value,
+                })
+              }
+              className="w-full rounded-xl border border-gray-300 p-3 outline-none focus:ring-2 focus:ring-indigo-500 transition"
             />
-          </div>
+          </motion.div>
 
           {/* Description */}
-          <div>
-            <label
-              htmlFor="description"
-              className="block mb-2 text-sm sm:text-base font-medium text-gray-700"
-            >
+
+          <motion.div
+            initial={{ x: 60, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ delay: 0.6 }}
+          >
+            <label className="block mb-2 text-gray-700 font-semibold">
               Description
             </label>
 
             <textarea
-              rows={5}
-              onChange={(event) =>setTaskData({...taskData,description:event.target.value})}
-              id="description"
-              name="description"
+              rows={6}
               placeholder="Enter task description..."
-              className="w-full rounded-lg border border-gray-300 p-3 text-sm sm:text-base resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            ></textarea>
-          </div>
+              value={taskData.description}
+              onChange={(e) =>
+                setTaskData({
+                  ...taskData,
+                  description: e.target.value,
+                })
+              }
+              className="w-full rounded-xl border border-gray-300 p-3 resize-none outline-none focus:ring-2 focus:ring-indigo-500 transition"
+            />
+          </motion.div>
 
           {/* Button */}
-          <button
-            type="submit"
+
+          <motion.button
+            whileHover={{
+              scale: 1.03,
+              boxShadow: "0px 10px 25px rgba(79,70,229,0.3)",
+            }}
+            whileTap={{ scale: 0.95 }}
             onClick={handleSubmit}
-            className="w-full rounded-lg bg-blue-600 py-3 text-white text-sm sm:text-base font-semibold transition duration-300 hover:bg-blue-700 active:scale-95"
+            className="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-3 rounded-xl text-lg font-semibold transition duration-300"
           >
             Add Task
-          </button>
-        
-      </div>
+          </motion.button>
+
+        </div>
+      </motion.div>
     </div>
   );
 };
